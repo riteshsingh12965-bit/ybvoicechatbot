@@ -39,7 +39,7 @@ Use at your own risks..
 
 
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/itsyogieu/ybvoicechatbot)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/riteshsingh12965-bit/ybvoicechatbot)
 
 - Enable the worker after deploy the project to Heroku
 - send `!ping`, `!uptime`, or `!sysinfo` from userbot account itself or its contacts to check if the userbot is running or not.
