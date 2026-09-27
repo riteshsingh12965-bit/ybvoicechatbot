@@ -1,6 +1,6 @@
-"""!ping reply with pong
+#"""!ping reply with pong
 !uptime check uptime
-"""
+#"""
 
 from time import time
 from datetime import datetime
@@ -96,6 +96,6 @@ async def get_uptime(_, m: Message):
         f"✯ start time: `{START_TIME_ISO}`"
     )
 
-Isme "filters.edited" dono jagah completely remove hai.
+#Isme "filters.edited" dono jagah completely remove hai.
 
-Ab deploy karo. Agar startup phir crash hota hai, next traceback bhejo—especially "plugins.vc.player" wali warning ko bhi next step me fix karenge.
+#Ab deploy karo. Agar startup phir crash hota hai, next traceback bhejo—especially "plugins.vc.player" wali warning ko bhi next step me fix karenge.
