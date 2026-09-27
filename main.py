@@ -1,10 +1,9 @@
 from os import environ
-# import logging
 from pyrogram import Client, idle
 
 api_id = int(environ["API_ID"])
 api_hash = environ["API_HASH"]
-session_name = environ["SESSION_NAME"]
+session_string = environ["SESSION_NAME"]
 
 plugins = dict(
     root="plugins",
@@ -15,11 +14,18 @@ plugins = dict(
     ]
 )
 
-app = Client(session_name, api_id, api_hash, plugins=plugins)
-# logging.basicConfig(level=logging.INFO)
-app.start()
-print('>>> USERBOT STARTED by @YogeshBots')
-idle()
-app.stop()
-print('\n>>> USERBOT STOPPED by @YogeshBots')
+app = Client(
+    "vcfighter",
+    api_id=api_id,
+    api_hash=api_hash,
+    session_string=session_string,
+    plugins=plugins
+)
 
+app.start()
+print(">>> USERBOT STARTED by @YogeshBots")
+
+idle()
+
+app.stop()
+print("\n>>> USERBOT STOPPED by @YogeshBots")
