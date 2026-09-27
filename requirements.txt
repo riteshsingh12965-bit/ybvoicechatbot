@@ -2,5 +2,5 @@ Pyrogram==2.0.106
 TgCrypto==1.2.5
 ffmpeg-python==0.2.0
 psutil==6.1.1
-PyTgCalls==2.1.0
+py-tgcalls==3.0.0
 wheel
