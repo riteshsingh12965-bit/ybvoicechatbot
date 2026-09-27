@@ -1,78 +1,101 @@
 """!ping reply with pong
 !uptime check uptime
 """
+
 from time import time
 from datetime import datetime
+
 from pyrogram import Client, filters, emoji
 from pyrogram.types import Message
 
-# DELAY_DELETE = 60
+
 START_TIME = datetime.utcnow()
 START_TIME_ISO = START_TIME.replace(microsecond=0).isoformat()
+
 TIME_DURATION_UNITS = (
-    ('week', 60 * 60 * 24 * 7),
-    ('day', 60 * 60 * 24),
-    ('hour', 60 * 60),
-    ('min', 60),
-    ('sec', 1)
+    ("week", 60 * 60 * 24 * 7),
+    ("day", 60 * 60 * 24),
+    ("hour", 60 * 60),
+    ("min", 60),
+    ("sec", 1),
 )
+
 
 self_or_contact_filter = filters.create(
-    lambda
-    _,
-    __,
-    message:
-    (message.from_user and message.from_user.is_contact) or message.outgoing
+    lambda _, __, message:
+    (message.from_user and message.from_user.is_contact)
+    or message.outgoing
 )
 
 
-# https://gist.github.com/borgstrom/936ca741e885a1438c374824efb038b3
 async def _human_time_duration(seconds):
     if seconds == 0:
-        return 'inf'
+        return "inf"
+
     parts = []
+
     for unit, div in TIME_DURATION_UNITS:
         amount, seconds = divmod(int(seconds), div)
+
         if amount > 0:
-            parts.append('{} {}{}'
-                         .format(amount, unit, "" if amount == 1 else "s"))
-    return ', '.join(parts)
+            parts.append(
+                "{} {}{}".format(
+                    amount,
+                    unit,
+                    "" if amount == 1 else "s"
+                )
+            )
 
-start = time()
-delta_ping = time() - start
+    return ", ".join(parts)
 
-PING_MSG = f"""🏋🏻 ping🤸🏻‍♀️: `{delta_ping * 1000:.3f} ms`
+
+PING_MSG = """🏋🏻 ping🤸🏻‍♀️: `{:.3f} ms`
 ✯Provided by 🤖 **[YogeshBots](https://t.me/YogeshBots)**
 ✯For Support 🆘 **[YogeshBots](https://t.me/YogeshBots)**"""
 
-@Client.on_message(filters.text
-                   & self_or_contact_filter
-                   & ~filters.edited
-                   & ~filters.via_bot
-                   & filters.regex("^!ping$"))
+
+@Client.on_message(
+    filters.text
+    & self_or_contact_filter
+    & ~filters.via_bot
+    & filters.regex(r"^!ping$")
+)
 async def ping_pong(_, m: Message):
-    """reply ping with pong and delete both messages"""
+    """Reply ping with pong."""
+
     start = time()
+
     m_reply = await m.reply_text("...")
+
     delta_ping = time() - start
+
     await m_reply.edit_text(
-        PING_MSG,
+        PING_MSG.format(delta_ping * 1000),
         disable_web_page_preview=True
     )
 
 
-@Client.on_message(filters.text
-                   & self_or_contact_filter
-                   & ~filters.edited
-                   & ~filters.via_bot
-                   & filters.regex("^!uptime$"))
+@Client.on_message(
+    filters.text
+    & self_or_contact_filter
+    & ~filters.via_bot
+    & filters.regex(r"^!uptime$")
+)
 async def get_uptime(_, m: Message):
-    """/uptime Reply with readable uptime and ISO 8601 start time"""
+    """Reply with readable uptime and ISO 8601 start time."""
+
     current_time = datetime.utcnow()
+
     uptime_sec = (current_time - START_TIME).total_seconds()
+
     uptime = await _human_time_duration(int(uptime_sec))
+
     await m.reply_text(
         f"{emoji.ROBOT}\n"
         f"✯ uptime: `{uptime}`\n"
         f"✯ start time: `{START_TIME_ISO}`"
     )
+
+Isme "filters.edited" dono jagah completely remove hai.
+
+Ab deploy karo. Agar startup phir crash hota hai, next traceback bhejo—especially "plugins.vc.player" wali warning ko bhi next step me fix karenge.
